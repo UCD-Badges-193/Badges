@@ -32,6 +32,9 @@
                             <img src="@ImageHelper.GetProfileImage(ViewBag.ProfileImage)" alt="@ViewBag.ProfileName" />
                             <span class="name">@ViewBag.ProfileName</span>
                         </a>
+                        <a href="@Url.Action("Notifications", "Index", new { area = string.Empty })" class="notifications">
+                            121 new notification
+                        </a>
                     </div>
                 </div>
             }

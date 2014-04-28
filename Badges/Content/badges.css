@@ -84,6 +84,21 @@ body {
   border-bottom: 3px solid #b1693d;
   width: 114px; }
 
+.profilebox .notifications {
+    background-color: #d5b053;
+    padding: 5px;
+    text-decoration: none;
+    color: #FFFFFF;
+    display: block;
+    -webkit-box-shadow: 0 0 31px 10px rgba(253, 220, 27, 0.75);
+    -moz-box-shadow: 0 0 31px 10px rgba(253, 220, 27, 0.75);
+    box-shadow: 0 0 31px 10px rgba(253, 220, 27, 0.75);
+}
+
+.profilebox .notifications:hover {
+    color: #071626;
+}
+
 .navbar .profilebox {
   position: absolute;
   top: 0px;
