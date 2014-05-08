@@ -48,7 +48,7 @@ namespace Badges.Controllers
             var model = new StudentIndexModel
                 {
                     Experiences = recentExperiences.ToArray(),
-                    Feedback = recentFeedback.ToArray()
+                    Feedback = recentFeedback.ToArray(),
                 };
 
             return View(model);
