@@ -8,6 +8,142 @@
     Viewing the badge <strong>@Model.BadgeSubmission.Badge.Name</strong> awarded to <strong>@Model.CreatorProfile.DisplayName</strong> on <em>@string.Format("{0:d}", Model.BadgeSubmission.AwardedOn)</em>
 </h3>
 
-<p>
+<!--<p>
     TODO: looks like the view experience page sorta
-</p>
+</p> -->
+
+@section AdditionalStyles
+{
+    <style type="text/css">
+        .jumbotron.evidence .container {
+            background: url(@Model.Badge.ImageUrl) no-repeat;
+            background-size: 100%;
+            background-position: -50%;
+        }
+        .container.maincontent {padding-top: 0;}
+        .alert {width: 100%; position: relative; z-index:100; float: left;}
+    </style>
+}
+
+<div class="row work-dash">
+    <div class="intro col-md-2">
+        <!--<div class="thumbnail circlepic">
+            @Html.Action("ViewProfileImage", "Profile")
+        </div>-->
+        <h3><strong>Add</strong> supporting Evidence</h3>
+    </div>
+    <nav class="navbar col-md-10" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display
+        <div class="navbar-header col-sm-1">
+            <div class="thumbnail circlepic pull-right">
+                @Html.Action("ViewProfileImage", "Profile")
+            </div>
+        </div> -->
+        <div class="collapse navbar-collapse">
+            <ul id="add-work" class="nav navbar-nav btn-toolbar">
+                <li>
+                    <a href="#supporting-work" data-work="text" data-helptext="Enter some text related to your evidence" data-toggle="modal" class="btn btn-default">
+                        <i class="icon-font icon-2x"></i>
+                        <span>Text</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#supporting-work" data-work="photo" data-helptext="Please choose a URL to an image OR upload your own image" data-toggle="modal" class="btn btn-default">
+                        <i class="icon-camera icon-2x"></i>
+                        <span>Photo</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#supporting-work" data-work="link" data-helptext="Add a link related to this evidence" data-toggle="modal" class="btn btn-default">
+                        <i class="icon-link icon-2x"></i>
+                        <span>Link</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#supporting-work" data-work="video" data-helptext="Youtube and Vimeo are supported" data-toggle="modal" class="btn btn-default">
+                        <i class="icon-facetime-video icon-2x"></i>
+                        <span>Video</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#supporting-work" data-work="audio" data-helptext="Upload an audio file related to this evidence" data-toggle="modal" class="btn btn-default">
+                        <i class="icon-music icon-2x"></i>
+                        <span>Audio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#supporting-work" data-work="file" data-helptext="Upload a file related to your evidence. If it is a photo, video, or audio file, please use those buttons instead."
+                       data-toggle="modal" class="btn btn-default">
+                        <i class="icon-file icon-2x"></i>
+                        <span>File</span>
+                    </a>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+</div>
+
+<!-- Modal -->
+<div id="supporting-work" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="supporting-work-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <i class="icon-add"></i>
+                <h3 id="supporting-work-label">Add supporting evidence</h3>
+            </div>
+            @using (Html.BeginForm("AddSupportingWork", "Student", new { id = Model.Badge.Id }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="work-type" name="type" value="photo" />
+                    <fieldset id="supporting-work-fields">
+                        <p id="work-helptext" class="well">What made this evidence impactful?</p>
+                        <div id="work-description" class="form-group">
+                            <label>Description</label>
+                            <input type="text" name="description" class="form-control" placeholder="Description for this work item" maxlength="140" data-val="true" data-val-required="Work Description Is Required"></input>
+                            <span class="field-validation-valid" data-valmsg-for="description" data-valmsg-replace="true"></span>
+                        </div>
+                        <div id="work-url" class="form-group work-optional">
+                            <label>Enter URL</label>
+                            <input type="text" name="url" class="form-control" placeholder="URL of work item" />
+                        </div>
+                        <div id="work-file" class="form-group work-optional">
+                            <label>Upload File</label>
+                            <input type="file" name="workFile" class="form-control" />
+                            <span id="upload-error" class="field-validation-error" style="display:none;"></span>
+                        </div>
+                        <div id="work-notes" class="form-group work-optional">
+                            <label>Notes</label>
+                            <textarea name="notes" class="form-control"></textarea>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-danger" value="Add Work" />
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section AdditionalScripts
+{
+    @Scripts.Render("~/bundles/mybadges")
+    @Scripts.Render("~/bundles/isotope")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Badges.init();
+        });
+        $(window).load(function () {
+            $('#work-container .row').isotope({
+                // options
+                itemSelector: '.work-item-box',
+                layoutMode: 'masonry'
+            });
+        });
+    </script>
+}

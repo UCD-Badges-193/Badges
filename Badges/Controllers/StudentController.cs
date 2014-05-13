@@ -387,5 +387,13 @@ namespace Badges.Controllers
                 ExperienceTypes = RepositoryFactory.ExperienceTypeRepository.GetAll()
             };
         }
+
+        private EvidenceEditModel GetEditModel(Evidence evidence)
+        {
+                return new EvidenceEditModel
+                {
+                
+                };
+        }
     }
 }

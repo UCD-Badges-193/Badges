@@ -23,8 +23,9 @@ namespace Badges.Controllers
         public ActionResult Badge(Guid id)
         {
             var badgeSubmission = RepositoryFactory.BadgeSubmissionRepository.GetNullableById(id);
-
+            var experience = RepositoryFactory.ExperienceRepository.GetNullableById(id);
             if (badgeSubmission == null) return HttpNotFound();
+            
 
             var model = new BadgeViewModel
                 {

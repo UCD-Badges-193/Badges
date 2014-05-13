@@ -229,6 +229,8 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\AssertionController.cs" />
     <Compile Include="Controllers\BadgeController.cs" />
+    <Compile Include="Controllers\Evidence.cs" />
+    <Compile Include="Controllers\EvidenceEditModel.cs" />
     <Compile Include="Controllers\ExperienceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />

@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "AddEvidence";
+}
+
+<h2>AddEvidence</h2>
+
+@using (Html.BeginForm("AddEvidence", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("_EvidenceForm")
+}
+
+@section AdditionalStyles
+{
+    @Styles.Render("~/Content/datepicker")
+    @Styles.Render("~/Content/typeahead")
+}
+

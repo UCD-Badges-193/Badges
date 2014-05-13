@@ -11,5 +11,7 @@ namespace Badges.Models.Public
         public Core.Domain.Badge Badge { get; set; }
         public List<Experience> Experiences { get; set; }
         public List<SupportingWork> Work { get; set; }
+
+        public Core.Repositories.IRepositoryFactory Experience { get; set; }
     }
 }

@@ -17,7 +17,6 @@
     case SupportingWorkTypes.Text:
         <h4>@Model.Description</h4>
         <blockquote>
-            @(Model.Notes.Length > 256 ? Model.Notes.Substring(250) + "..." : Model.Notes)
         </blockquote>
         break;
     case SupportingWorkTypes.Video:
