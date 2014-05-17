@@ -4,10 +4,80 @@
     ViewBag.Title = "Badges";
 }
 
-<h3>
-    Viewing the badge <strong>@Model.BadgeSubmission.Badge.Name</strong> awarded to <strong>@Model.CreatorProfile.DisplayName</strong> on <em>@string.Format("{0:d}", Model.BadgeSubmission.AwardedOn)</em>
-</h3>
+<div class="col-md-10 mountain-view clearfix">
+    <img class="pull-left evidence-badge" alt="Badge Icon" src="@Model.BadgeSubmission.Badge.ImageUrl" />
+    <span class="evidence header-text">@Model.BadgeSubmission.Badge.Name </span>
+    <span class="evidence header-desc">@Model.BadgeSubmission.Badge.Description </span>
+    <span class="evidence awarded-desc">Awarded to <strong>@Model.CreatorProfile.DisplayName</strong> on <em>@string.Format("{0:d}", Model.BadgeSubmission.AwardedOn)</em></span>
+    <img class="evidence-user-pic" src="@Model.CreatorProfile.ImageUrl"/>
+</div>
+<div class="row">
+    <div class="col-md-9">
+        <h3>Criteria for the <span class="badge-title">@Model.BadgeSubmission.Badge.Name</span></h3>
+    </div>
+</div>
+@{int count = 1;}
+@foreach (var criteria in Model.BadgeSubmission.Badge.BadgeCriterias)
+{
+    <div class="row">
+        <div id="badge-criteria" class="col-md-12">
+            <div class="row criterion">
+                <div class="col-md-3">
+                    <div class="associated-work-container">
+                        <h4>#<span>@count</span></h4>
+                        <blockquote><p>@criteria.Details</p></blockquote>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="associated-work-items">
+                        <div class="associated-work">
+                            @foreach (var fulfillment in Model.BadgeSubmission.BadgeFulfillments.Where(x => x.BadgeCriteria.Id == criteria.Id))
+                            {
+                                var imageSrc = fulfillment.Experience == null ? fulfillment.SupportingWork.Url : fulfillment.Experience.CoverImageUrl;
+                                var title = fulfillment.Experience == null ? fulfillment.SupportingWork.Description : fulfillment.Experience.Name;
+                                var link = fulfillment.Experience == null ? fulfillment.SupportingWork.Url : Url.Action("ViewExperience", "Student", new { area = string.Empty, id = fulfillment.Experience.Id });
+                                if (link == null && fulfillment.SupportingWork != null) { link = Url.Action("ViewExperience", "Student", new { area = string.Empty, id = fulfillment.SupportingWork.Experience.Id }); }
 
-<p>
-    TODO: looks like the view experience page sorta
-</p>
+                                <div class="work-item">
+                                    <img src="@imageSrc" alt="" />
+                                    <h4>@title</h4>
+                                    <div class="work-actions">
+                                        <a href="@link" class="view full" target="_blank"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    count++;
+}
+<div class="row">
+    <div class="col-md-10">
+        <div class="form-group">
+            <label>Reflections on earning the <span class="badge-title">@Model.Badge.Name</span> badge</label>
+            <p class="well">
+                @Model.BadgeSubmission.Reflection
+            </p>
+        </div>
+    </div>
+</div>
+
+@section AdditionalScripts
+{
+    @Scripts.Render("~/bundles/typeahead")
+    @Scripts.Render("~/bundles/isotope")
+
+    <script>
+        $(function() {
+            $('.associated-work').isotope({
+                // options
+                itemSelector: '.work-item',
+                layoutMode: 'masonry'
+            });
+        });
+    </script>
+}
